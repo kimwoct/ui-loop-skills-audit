@@ -32,10 +32,10 @@ Apply `ui-fix-loop`'s **Coding-agent selection and Herdr sessions (global)** con
 1. Trace the CURRENT flow with evidence: live network capture in the browser (fetch logger via browser-use, or DevTools waterfall), curl replay of server actions, or server-side logs. Code reading supplements but does not replace observation — the same standard as ui-fix-loop's live-page rule.
 2. Author the CURRENT diagram from that trace: every request in order, redundancies and costs marked per the variant rules above.
 3. Write the **numbered change list**: one line per intended change, each with a measurable expected effect ("×3 → ×1 `users/me` per analytics pass", "4.3MB → ≤0.5MB", "~31 prefetch no-ops → 0").
-4. **Element access.** When exercising or verifying the change requires reaching any element through UI actions (clicks, route navigation, role/state gates), record two artifacts before implementation starts:
-   - an **access-path diagram**: app entry → routes → the triggering control → the affected surface, with role/state gates as branches;
-   - a numbered **element-access walkthrough**: one line per action, each naming the exact route/control used, e.g. `1. /dashboard 2. 量表追蹤 3. survey row → 重寄提醒 4. confirm modal`.
-   On combined UI+logic rounds these land on the shared ui-fix-loop canvas; diagram-only rounds keep them beside the diagram pair (same folder, same `<repo>/<issue-slug>` prefix). The walkthrough is the replay script — the Phase 3 as-shipped trace and the Phase 4 deployed trace re-exercise exactly this path.
+4. **Element access.** If the change needs UI actions to reach an element during test or verification, apply `ui-fix-loop` Phase 2 **Element access (shared owner)**. Record the access-path diagram and the numbered walkthrough before implementation starts.
+   - Combined UI + logic round: put them on the shared ui-fix-loop canvas.
+   - Diagram-only round: put them beside the diagram pair, with the same `<repo>/<issue-slug>` prefix.
+   The Phase 3 as-shipped trace and the Phase 4 deployed trace replay this walkthrough.
 
 ## Phase 2 — PREVIEW (approval gate)
 

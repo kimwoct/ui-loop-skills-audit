@@ -26,10 +26,7 @@ A fix without a reference is guessing. Before touching code:
    - the approved canvas preview itself (for pure-visual rounds);
    - a named environment's live behavior (e.g. "prod wfjlps renders it this way").
 2. **Cross-check the current state against that reference** and put the diff on the canvas — what differs, cell by cell / element by element. This diff, not the symptom, defines the work.
-3. **Record element access when reaching the element needs UI actions.** If the affected element(s) require UI actions to reach — clicks, route navigation, role/state prerequisites — put two artifacts on the canvas before the approval gate:
-   - an **access-path diagram**: app entry → routes → the clicks that matter → the element, with role/state gates as branches (plain HTML/SVG boxes and arrows, or a mermaid-source block — the canvas has no build step);
-   - a numbered **element-access walkthrough**: one line per action, each naming the exact route/control used, e.g. `1. /dashboard 2. 量表追蹤 3. survey row → 重寄提醒 4. confirm modal`.
-   The walkthrough is the round's replay script: Phase 1 local evidence and Phase 2 deployed evidence follow it verbatim. An element the round cannot reach on a recorded path is a blocker — it goes on the canvas before implementation starts, not after.
+3. **Record element access when reaching the element needs UI actions.** Apply `ui-fix-loop` Phase 2 **Element access (shared owner)**. Put the access-path diagram and the numbered walkthrough on the canvas before the approval step. Phase 1 local evidence and Phase 2 deployed evidence replay that walkthrough.
 4. **Get explicit approval of the intended end state** (the ui-fix-loop PREVIEW gate) before implementing. The approval question must name the reference: "aligned to <file/env>, approve?" — and every open decision must be a numbered **askUser-style question** with concrete options as pills and the recommended default marked `data-recommended="true"` (ui-fix-loop Phase 2 mandatory-answer rule): the widget unlocks only when every question has an explicit selection, and a chat approval counts only if it names a choice for every numbered question. Silence never selects a default, here or in any later round.
 
 ## Phase 1 — IMPLEMENT + LIVE VERIFY
@@ -54,11 +51,11 @@ When the evidence canvas is a Whiteboard board — typically produced by a simil
 
 - **Canvas = a Whiteboard session.** Record the board's pins (`worktree`/`commits`, base, head) as Phase-0 provenance: they name the revision every `review-source:` link on the board resolves against.
 - **Phase 0 carries over unchanged in substance** — reference naming, element-access recording (Phase 0 step 3, with the board as the recording surface when the sketch evidence is a Whiteboard), and approval stays explicit and numbered with required answers. For sketch-hosted rounds the realistic reference candidates are: a named environment's live behavior (strongest), the deployed branch the environment actually runs (e.g. up-to-date `develop`), or the board itself for pure-render rounds only. A sketch that cites code is **not** its own reference.
-- **Cross-check = per-claim verification.** Re-resolve every code link at the pinned revision (`session_source` / `session_file` / `session_diff`) and re-exercise the flows the board asserts against the reference environment; write a per-claim `Verification` section on the board (claim → observed → agrees/differs), never a batch verdict.
+- **Cross-check = per-claim verification.** Read every linked range at the pinned revision with `git show <head>:<path>` in the board's pinned repository. Confirm each link points at the claimed text. Re-exercise the flows the board asserts against the reference environment. Write a per-claim `Verification` section on the board (claim → observed → agrees/differs), never a batch verdict.
 - **Phase 1: fix the board, not the repo.** If the sketch drifted from reality, update the board under a fresh document lease (repin → read → edit). Only if the *reference itself* (env/artifact) turns out wrong or drifted is this a repo fix — and that becomes a new ui-fix-loop round with its own canvas.
 - **Phase 2 unchanged.** Deployed-environment proof still means exercising the real user path on the named env; traceability URLs are recorded as board evidence. The closing label for a verification board is `VERIFIED — deployed & e2e-verified <env> <date>` (`FIXED` stays reserved for fix rounds). End the lease (`session_activity_end`) before `session_open` so the board reads as ready.
 - **Evidence record.** Persist the whiteboard-agent-review JSON format with `agent: null` and `verification` entries pointing at the board's Verification section.
-- **Authoring details, schemas, recovery.** See skill: whiteboard-agent-review (§Schema notes learned on a live v0.2 run; Mode B authoring contract; instance-switch recovery).
+- **Authoring details, schemas, recovery.** See skill: whiteboard-agent-review (§Mode B — architecture-sketch whiteboard; §Schema notes learned on a live v0.2 run). Read `session_get_instructions` before authoring.
 
 ## Anti-patterns this skill exists to prevent
 
