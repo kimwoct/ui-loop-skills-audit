@@ -90,7 +90,7 @@ The widget keeps Approve / Request-changes **disabled until every question has a
 **Element access (shared owner).** This block is the one definition of the element-access gate. `ui-verify-loop` and `ui-logic-loop` point here. Use the gate when the user must do UI actions to reach an affected element. UI actions are clicks, route changes, and role or state prerequisites. Before you ask for approval, put two artifacts on the canvas:
 
 - An **access-path diagram**. Start at the app entry. Go through the routes and the clicks. End at the element. Show each role or state prerequisite as a branch. Use plain HTML/SVG boxes and arrows, or a mermaid-source block. The canvas has no build step.
-- A numbered **element-access walkthrough**. Write one action on each line. Name the exact route or control on each line. Example: `1. /dashboard 2. 量表追蹤 3. survey row → 重寄提醒 4. confirm modal`.
+- A numbered **element-access walkthrough**. Write one action on each line. Name the exact route or control on each line. Example: `1. / 2. 登入 → /zh-Hant/login 3. /zh-Hant/dashboard 4. 學生訓練需要評估量表（側欄）5. 分頁 電郵發送追蹤 → 追蹤列的「立即發送／修改截止日期」`.
 
 The walkthrough is the replay script of the round. Local evidence (Phase 3) and deployed evidence (`ui-verify-loop` Phase 2, `ui-logic-loop` Phase 4) follow it step by step. Do not change the steps between the runs. If the round cannot reach an element on a recorded path, the round is blocked. Put the blocker on the canvas before implementation starts, not after.
 
