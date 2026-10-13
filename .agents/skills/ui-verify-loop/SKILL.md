@@ -34,7 +34,7 @@ A fix without a reference is guessing. Before touching code:
 
 ## Phase 1 — IMPLEMENT + LIVE VERIFY
 
-Follow `ui-fix-loop` phases 3+: implement, run the project's checks, capture live-page evidence for every issue by replaying the canvas's element-access walkthrough step by step, update the canvas, loop until canvas and live page agree.
+Follow `ui-fix-loop` phases 3+: implement, run the project's checks, capture live-page evidence for every issue by replaying the canvas's element-access walkthrough step by step when Phase 0 step 3 applies, update the canvas, loop until canvas and live page agree.
 
 Finish Phase 1 by opening a PR from the round's worktree branch into its confirmed parent branch (ui-fix-loop **Worktree and PR**, including its GitHub parent-branch guard). Use an explicit `--base <parent>` and verify the resulting `baseRefName` and `headRefName` with `gh pr view <url> --json baseRefName,headRefName,url` before marking the round `IMPLEMENTED — PR <url> → <parent>` and stopping there. Never ask about deployment before or during implementation.
 
@@ -43,7 +43,7 @@ Finish Phase 1 by opening a PR from the round's worktree branch into its confirm
 Run this phase only after the PR is merged **and** the user asks to deploy. It is never part of the pre-implementation approval questions.
 
 1. **Confirm the deployment target with the user** (which env: UAT / prod / school server) and deploy the change there — frontend and backend alike when both moved.
-2. **Re-run the reference cross-check ON the deployed environment**, not localhost: exercise the real user path — the canvas's **element-access walkthrough** replayed step by step (upload the artifact, download it back, generate the export, click the flow) — and compare the result against the same Phase-0 reference.
+2. **Re-run the reference cross-check ON the deployed environment**, not localhost: exercise the real user path — the canvas's **element-access walkthrough** replayed step by step when Phase 0 step 3 applies (upload the artifact, download it back, generate the export, click the flow) — and compare the result against the same Phase-0 reference.
 3. Update the canvas with the deployed-environment evidence (what was checked, what came back). Every numbered issue must show deployed-env proof, not localhost proof.
 4. **Traceability closes with the round.** For a round tied to a Conductor card, close the two-way canvas↔card link by ui-fix-loop's **Traceability** check — confirm both directions on the live surface and record the two URLs and their results in the canvas evidence. A round with no knowable card id skips this (the clean-heading exception); a round whose canvas the board cannot open, or that does not name its card, is not traceable end-to-end.
 5. Only when canvas evidence and the deployed environment agree: mark the round `FIXED — deployed & e2e-verified <env> <date>`, deliver screenshots inline, and update memory.
