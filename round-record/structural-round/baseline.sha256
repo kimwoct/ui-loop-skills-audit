@@ -1,0 +1,11 @@
+4c57b1c7a2a871c4fed88b87ae9eb29d094afcfb9c955a1a5079f9a9471de605  ui-fix-loop/SKILL.md
+3c043c9575b2975251efc2ae154dcc022c4ec7bc2b54d59c68f598e7a20bcecf  ui-verify-loop/SKILL.md
+807ecc3695ec40beef7da16b99d001803d7b16176bf17e214b7c3e906032b1da  ui-logic-loop/SKILL.md
+b7f4b6d0c7e3fa4ff8e3283a2b7173e3b623b43334e66c5484da0402ea50d66d  /Users/user/.agents/skills/ui-loop-core/scripts/check-skill-text.mjs
+25b821b3fc6619cb9a7e8988e80979ee699990541655ca2f42140ef8d5562626  /Users/user/.agents/skills/ui-loop-core/references/whiteboard.md
+7f7c8527644d8d9c5f73b5600e36f2d7f04275245a5e39d9b94899f70b9d65e2  /Users/user/.agents/skills/ui-loop-core/references/executor-triage.md
+4ca49cd66083f9c9ab59b74a578b233752212407a432f4154ee17cd3c4db58ea  /Users/user/.agents/skills/ui-loop-core/SKILL.md
+338a34a540167a3d00302d850b285e036c5d4298c6ce410e9ffc4b641fedfbe0  /Users/user/.agents/skills/ui-loop-core/scripts/check-evidence.mjs
+1140b175fb6e9f595cd2b4556c748dd5b62000b8e8328245afad86844609f27b  /Users/user/.agents/skills/ui-loop-core/scripts/check-evidence.mjs
+935eeff0a4c73b4984cadf3d3ff26d168395ac54d9dd05e773b58a929942924a  /Users/user/.agents/skills/ui-loop-core/scripts/fixtures/good.json
+b052d630d34556a74e9c30a7326b42b6795c6a54bddfedf622510aaedfb97fa7  /Users/user/.agents/skills/ui-loop-core/scripts/fixtures/implemented.json

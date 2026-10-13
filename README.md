@@ -1,24 +1,24 @@
-# Skills snapshot — element-access gate board (revision 3)
+# ui-loop-skills-audit
 
-Pinned source for the Whiteboard session "Element-access gate". The board's
-`review-source:head/...` links resolve into this snapshot.
+Audit trail for the 2026-10-13 rework of the `ui-fix-loop`, `ui-verify-loop`, and `ui-logic-loop` skills.
 
-- `.agents/skills/ui-fix-loop/SKILL.md` — copied from `/Users/user/.agents/skills/ui-fix-loop/SKILL.md`.
-- `.agents/skills/ui-verify-loop/SKILL.md` — copied from `/Users/user/.agents/skills/ui-verify-loop/SKILL.md` (also reachable via the `~/.omp/agent/skills/ui-verify-loop` symlink; one physical file).
-- `.agents/skills/ui-logic-loop/SKILL.md` — copied from `/Users/user/.agents/skills/ui-logic-loop/SKILL.md` (symlinked into `~/.omp/agent/skills/` since 2026-10-13).
+```mermaid
+flowchart LR
+  R[review] --> G0[six decisions] --> W1[T1 · T3 · T4] --> W2[T2] --> V[T6 · T6b · T6c] --> B[T7 board]
+  V -->|findings| F[T1b · T3b · T3c · T4b · T4c · T4d] --> V
+```
 
-Revision history:
-1. `10e831f` — initial snapshot (two skills, pre-opus-review state).
-2. `c2ae32a` — replay qualifiers at verify-loop L37/L46 (codex review pass).
-3. this commit — gate-owner refactor applied by the opus session (direct writer):
-   ui-fix-loop holds the single **Element access (shared owner)** definition
-   (Phase 2) plus the Phase 3 replay clause and the anti-pattern line;
-   ui-verify-loop P0 step 3 and ui-logic-loop Phase 1 step 4 became pointers
-   (step numbers kept so cross-references resolve); phantom tool names and the
-   dead `instance-switch` reference removed; ui-fix-loop added to the snapshot.
-   Backups + pre/post hashes: `~/.agents/skill-backups/2026-10-13-element-gate-owner/`.
+## Layout
 
-All copies verified byte-identical to the live files (`cmp`) at commit time
-2026-10-13, so line anchors on the board match the edited files.
-`~/.agents` itself is not a git checkout, so the board pins this snapshot repo
-(commits target, head commit) instead of a worktree.
+| Path | Content |
+|---|---|
+| `.agents/skills/` | Verified skill snapshot: `ui-loop-core` (new), the three thinned loops, references, scripts. Commit history shows each step. |
+| `round-record/2026-10-13-ui-loop-skills-review.md` | The review (findings F1–F16, proposed structure, STE rules). |
+| `round-record/2026-10-13-structural-round-orchestration.md` | The multi-agent plan, status log, and close (§10–§12). |
+| `round-record/structural-round/` | Task specs (T1–T7), verifier reports, baseline and final SHA-256. |
+
+## Source of truth
+
+The live skills are in `~/.agents/skills` and publish to `kimwoct/skills`. This repo is a record. Do not edit skills here.
+
+Whiteboard board `80954030` is pinned to commit `457e4f2` of this history.
