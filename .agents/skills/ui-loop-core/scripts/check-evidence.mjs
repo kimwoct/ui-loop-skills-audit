@@ -7,6 +7,7 @@ flowchart LR
 ```
 */
 import { readFile } from 'node:fs/promises';
+import { basename } from 'node:path';
 
 const args = process.argv.slice(2);
 const usage = 'Use: node check-evidence.mjs [--label implemented|verified] <file>';
@@ -29,7 +30,26 @@ try {
   }
   const mergeSha = record.pr?.mergeSha;
   let failures = 0;
+  const requireValue = (path, value) => {
+    if (value == null || (typeof value === 'string' && /^(?:\s*|\.\.\.|…|TODO|<[^>]*>)$/.test(value.trim()))) {
+      failures++;
+      console.error(`Provide a non-placeholder value for ${path}.`);
+    }
+  };
+  requireValue('round', record.round);
+  requireValue('reference.value', record.reference?.value);
+  for (const field of ['url', 'head', 'base']) requireValue(`pr.${field}`, record.pr?.[field]);
+  if (label === 'verified') requireValue('pr.mergeSha', mergeSha);
+  for (const [field, value] of Object.entries(record.dispatch ?? {})) requireValue(`dispatch.${field}`, value);
+  if (typeof record.round === 'string' && record.round.split('/').at(-1) !== basename(file).replace(/(?:\.evidence)?\.json$/, '')) {
+    console.warn(`Warning: round ${record.round} does not match evidence file ${basename(file)}.`);
+  }
   for (const [index, issue] of record.issues.entries()) {
+    requireValue(`issues[${index}].expected`, issue?.expected);
+    for (const field of ['result', 'artifact']) requireValue(`issues[${index}].local.${field}`, issue?.local?.[field]);
+    if (label === 'verified') {
+      for (const field of ['env', 'buildSha', 'artifact']) requireValue(`issues[${index}].deployed.${field}`, issue?.deployed?.[field]);
+    }
     const reasons = [];
     if (label === 'implemented') {
       if (issue?.local?.result !== 'pass') reasons.push('Set local.result to pass.');
